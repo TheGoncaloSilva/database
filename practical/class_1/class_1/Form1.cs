@@ -35,24 +35,10 @@ namespace class_1
           + "Initial Catalog = " + database + "; uid = " + user + ";" + "password = " 
           + password + ";" + "Trusted_Connection = False; MultipleActiveResultSets = True; " +
           "Encrypt = True; TrustServerCertificate = True");
+            
+            string data = GetTableContent(CN);
 
-            try
-            {
-                CN.Open();
-                if (CN.State == ConnectionState.Open)
-                {
-                    string data = GetTableContent(CN);
-
-                    MessageBox.Show(data);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to open connection to database due to the error \r\n" +
-               ex.Message, "Connection Test", MessageBoxButtons.OK);
-            }
-            if (CN.State == ConnectionState.Open)
-                CN.Close();
+            MessageBox.Show(data);
         }
 
 
