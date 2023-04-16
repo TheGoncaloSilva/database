@@ -1,0 +1,46 @@
+CREATE TABLE Armazem(
+    [Codigo] INTEGER NOT NULL PRIMARY KEY IDENTITY,
+    [Morada] VARCHAR(256) NOT NULL
+);
+
+CREATE TABLE Produtos(
+    [Codigo] INTEGER NOT NULL PRIMARY KEY IDENTITY,
+    [Iva] SMALLINT NOT NULL DEFAULT 23,
+    [Nome] VARCHAR(128) NOT NULL,
+    [Preco] FLOAT,
+    [ARMAZEM_Codigo] INTEGER REFERENCES Armazem(Codigo) NOT NULL,
+    [Unidades_Armazem] DECIMAL,
+    CONSTRAINT [Units] CHECK (Unidades_Armazem > 0)
+);
+
+CREATE TABLE Tipo_fornecedor(
+    [Codigo] SMALLINT NOT NULL PRIMARY KEY IDENTITY,
+    [Designacao] VARCHAR(32) NOT NULL
+);
+
+CREATE TABLE Condicoes_pagamento(
+    [Codigo] SMALLINT NOT NULL PRIMARY KEY IDENTITY,
+    [Prazo] INTEGER NOT NULL,
+    [Expiracao] INTEGER
+);
+
+CREATE TABLE Fornecedor(
+    [Codigo] SMALLINT NOT NULL PRIMARY KEY IDENTITY,
+    [Nif] INTEGER NOT NULL,
+    [CONDICAO_PAGAMENTO_Codigo] SMALLINT REFERENCES Condicoes_pagamento(Codigo) NOT NULL,
+    [TIPO_FORNECEDOR_Codigo] SMALLINT REFERENCES Tipo_fornecedor(Codigo) NOT NULL
+); 
+
+CREATE TABLE Encomenda(
+    [Numero] INTEGER NOT NULL PRIMARY KEY IDENTITY,
+    [Data] DATETIME NOT NULL,
+    [FORNECEDOR_Codiogo] SMALLINT REFERENCES Fornecedor(Codigo) NOT NULL
+);
+
+CREATE TABLE Produtos_encomenda(
+    [PRODUTOS_Codigo] INTEGER REFERENCES Produtos(Codigo) NOT NULL,
+    [Numero_Unidades] INTEGER NOT NULL,
+    [ENCOMENDA_Numero] INTEGER REFERENCES Encomenda(Numero) NOT NULL,
+    PRIMARY KEY(PRODUTOS_Codigo, ENCOMENDA_Numero)
+);
+
