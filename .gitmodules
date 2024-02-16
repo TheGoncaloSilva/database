@@ -1,0 +1,3 @@
+[submodule "project/WasteNot-Warning"]
+	path = project/WasteNot-Warning
+	url = git@github.com:TheGoncaloSilva/WasteNot-Warning.git
